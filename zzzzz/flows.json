@@ -1,0 +1,23 @@
+[
+    {
+        "id": "58518d239097b59e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a4163ed66663eb3b",
+        "type": "complete",
+        "z": "58518d239097b59e",
+        "name": "",
+        "scope": [],
+        "uncaught": false,
+        "x": 770,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    }
+]
