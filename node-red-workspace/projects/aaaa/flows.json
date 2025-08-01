@@ -1,0 +1,1783 @@
+[
+    {
+        "id": "7a9698d2ef68f404",
+        "type": "tab",
+        "label": "tranArchivePurge",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "06a62e7f99345e7e",
+        "type": "aqua_transformer_provider",
+        "name": "tranAcctPurgeCompute",
+        "returntype": "ONETOONE",
+        "provider": "com.fininfra.aqua.extn.purge.tranAcctPurge.TranAcctPurgeCompute",
+        "params": "{}",
+        "broadcast": ""
+    },
+    {
+        "id": "8aeac40f1f2aeee5",
+        "type": "aqua_action_provider",
+        "name": "purgeWriter",
+        "argtype": "TUPLE",
+        "provider": "com.fininfra.aqua.extn.purge.consumer.PurgeWriter",
+        "params": "{\"acks\":\"1\",\"bootstrap.servers\":\"localhost:9092\"}",
+        "broadcast": "com.fininfra.aqua.extn.kafka.KafkaProducerFunction"
+    },
+    {
+        "id": "9187c8c53eab7550",
+        "type": "aqua_action_provider",
+        "name": "reportwriter",
+        "argtype": "LIST",
+        "provider": "com.fininfra.aqua.action.extn.jdbc.ReportSaver",
+        "params": "{}",
+        "broadcast": ""
+    },
+    {
+        "id": "621f0981174e39c6",
+        "type": "aqua_transformer_provider",
+        "name": "tranPurgeCompute",
+        "returntype": "ONETOONE",
+        "provider": "com.fininfra.aqua.extn.purge.tranPurge.TranPurgeCompute",
+        "params": "{}",
+        "broadcast": ""
+    },
+    {
+        "id": "d63b16f9f9bd147b",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "transaction",
+        "schema": "{\"fields\":[{\"name\":\"tran_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"del_flg\",\"type\":\"string\"},{\"name\":\"tran_type\",\"type\":\"string\"},{\"name\":\"tran_sub_type\",\"type\":\"string\"},{\"name\":\"num_cr_tran_entry\",\"type\":\"long\"},{\"name\":\"num_dr_tran_entry\",\"type\":\"long\"},{\"name\":\"num_cr_tran_pstd\",\"type\":\"long\"},{\"name\":\"num_dr_tran_pstd\",\"type\":\"long\"},{\"name\":\"num_tran_vfd\",\"type\":\"long\"},{\"name\":\"num_tran_deleted\",\"type\":\"long\"},{\"name\":\"tran_cre_mode\",\"type\":\"string\"},{\"name\":\"restrict_modify_ind\",\"type\":\"string\"},{\"name\":\"remarks\",\"type\":\"string\"},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"},{\"name\":\"rcre_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"pst_flg\",\"type\":\"string\"},{\"name\":\"delivery_channel_id\",\"type\":\"string\"},{\"name\":\"init_sol_id\",\"type\":\"string\"},{\"name\":\"ignore_xcpn_flg\",\"type\":\"string\"},{\"name\":\"num_tran_purged\",\"type\":\"long\"},{\"name\":\"b2k_event_type\",\"type\":\"string\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"referral_event_type\",\"type\":\"string\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"sys_entered_user_mod_flg\",\"type\":\"string\"},{\"name\":\"sys_tran_code\",\"type\":\"string\"},{\"name\":\"user_tran_code\",\"type\":\"string\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\"],\"tsField\":\"ts_cnt\",\"maxTsValue\":9999,\"tsResetLowerBound\":0,\"tsResetUpperBound\":20}"
+    },
+    {
+        "id": "2be824d3fb639401",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "part_transaction",
+        "schema": "{\"fields\":[{\"name\":\"tran_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"del_flg\",\"type\":\"string\"},{\"name\":\"tran_type\",\"type\":\"string\"},{\"name\":\"tran_sub_type\",\"type\":\"string\"},{\"name\":\"part_tran_type\",\"type\":\"string\"},{\"name\":\"gl_sub_head_code\",\"type\":\"string\"},{\"name\":\"acid\",\"type\":\"string\"},{\"name\":\"value_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"tran_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"tran_particular\",\"type\":\"string\"},{\"name\":\"entry_user_id\",\"type\":\"string\"},{\"name\":\"pstd_user_id\",\"type\":\"string\"},{\"name\":\"vfd_user_id\",\"type\":\"string\"},{\"name\":\"entry_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"pstd_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"vfd_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"rpt_code\",\"type\":\"string\"},{\"name\":\"ref_num\",\"type\":\"string\"},{\"name\":\"instrmnt_type\",\"type\":\"string\"},{\"name\":\"instrmnt_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"instrmnt_num\",\"type\":\"string\"},{\"name\":\"instrmnt_alpha\",\"type\":\"string\"},{\"name\":\"tran_rmks\",\"type\":\"string\"},{\"name\":\"pstd_flg\",\"type\":\"string\"},{\"name\":\"prnt_advc_ind\",\"type\":\"string\"},{\"name\":\"amt_reservation_ind\",\"type\":\"string\"},{\"name\":\"reservation_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"restrict_modify_ind\",\"type\":\"string\"},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"},{\"name\":\"rcre_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"cust_id\",\"type\":\"string\"},{\"name\":\"voucher_print_flg\",\"type\":\"string\"},{\"name\":\"module_id\",\"type\":\"string\"},{\"name\":\"br_code\",\"type\":\"string\"},{\"name\":\"fx_tran_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"rate_code\",\"type\":\"string\"},{\"name\":\"rate\",\"type\":\"double\"},{\"name\":\"crncy_code\",\"type\":\"string\"},{\"name\":\"navigation_flg\",\"type\":\"string\"},{\"name\":\"tran_crncy_code\",\"type\":\"string\"},{\"name\":\"ref_crncy_code\",\"type\":\"string\"},{\"name\":\"ref_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"sol_id\",\"type\":\"string\"},{\"name\":\"bank_code\",\"type\":\"string\"},{\"name\":\"trea_ref_num\",\"type\":\"string\"},{\"name\":\"trea_rate\",\"type\":\"double\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"gst_upd_flg\",\"type\":\"string\"},{\"name\":\"iso_flg\",\"type\":\"string\"},{\"name\":\"eabfab_upd_flg\",\"type\":\"string\"},{\"name\":\"lift_lien_flg\",\"type\":\"string\"},{\"name\":\"proxy_post_ind\",\"type\":\"string\"},{\"name\":\"si_srl_num\",\"type\":\"string\"},{\"name\":\"si_org_exec_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"pr_srl_num\",\"type\":\"string\"},{\"name\":\"serial_num\",\"type\":\"string\"},{\"name\":\"del_memo_pad\",\"type\":\"string\"},{\"name\":\"uad_module_id\",\"type\":\"string\"},{\"name\":\"uad_module_key\",\"type\":\"string\"},{\"name\":\"reversal_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"reversal_value_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"pttm_event_type\",\"type\":\"string\"},{\"name\":\"proxy_acid\",\"type\":\"string\"},{\"name\":\"tod_entity_type\",\"type\":\"string\"},{\"name\":\"tod_entity_id\",\"type\":\"string\"},{\"name\":\"dth_init_sol_id\",\"type\":\"string\"},{\"name\":\"regularization_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"principal_portion_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"tf_entity_sol_id\",\"type\":\"string\"},{\"name\":\"tran_particular_2\",\"type\":\"string\"},{\"name\":\"tran_particular_code\",\"type\":\"string\"},{\"name\":\"tr_status\",\"type\":\"string\"},{\"name\":\"svs_tran_id\",\"type\":\"string\"},{\"name\":\"crncy_hol_chk_done_flg\",\"type\":\"string\"},{\"name\":\"referral_id\",\"type\":\"string\"},{\"name\":\"party_code\",\"type\":\"string\"},{\"name\":\"gl_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"bkdt_tran_flg\",\"type\":\"string\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"impl_cash_part_tran_flg\",\"type\":\"string\"},{\"name\":\"ptran_chrg_exists_flg\",\"type\":\"string\"},{\"name\":\"mud_pool_bal_build_flg\",\"type\":\"string\"},{\"name\":\"used_clean_single_tran_lim\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"used_single_tran_lim\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"used_un_clr_over_dacc_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"used_clean_emer_advn\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"used_emer_advn\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"gl_segment_string\",\"type\":\"string\"},{\"name\":\"comb_tran_id\",\"type\":\"string\"},{\"name\":\"sys_part_tran_code\",\"type\":\"string\"},{\"name\":\"user_part_tran_code\",\"type\":\"string\"},{\"name\":\"tran_free_code1\",\"type\":\"string\"},{\"name\":\"tran_free_code2\",\"type\":\"string\"},{\"name\":\"resp_acct_ref_no\",\"type\":\"string\"},{\"name\":\"purpose_code\",\"type\":\"string\"},{\"name\":\"ent_account_id\",\"type\":\"string\"},{\"name\":\"va_repl_status\",\"type\":\"string\"},{\"name\":\"va_real_txn_reqd_flg\",\"type\":\"string\"},{\"name\":\"ent_account_type\",\"type\":\"string\"},{\"name\":\"va_account_id\",\"type\":\"string\"},{\"name\":\"pstd_srl_num\",\"type\":\"long\"},{\"name\":\"reversal_status\",\"type\":\"string\"},{\"name\":\"used_sanct_lim\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"used_pool_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"available_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"acct_balance\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"purge_flg\",\"type\":\"string\"},{\"name\":\"foracid\",\"type\":\"string\"},{\"name\":\"acct_name\",\"type\":\"string\"},{\"name\":\"schm_code\",\"type\":\"string\"},{\"name\":\"schm_type\",\"type\":\"string\"},{\"name\":\"async_balance_flg\",\"type\":\"string\"},{\"name\":\"cif_id\",\"type\":\"string\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\",\"part_tran_srl_num\"],\"tsField\":\"ts_cnt\",\"maxTsValue\":9999,\"tsResetLowerBound\":0,\"tsResetUpperBound\":10}"
+    },
+    {
+        "id": "6e9113dafac05acb",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "accountFile",
+        "schema": "{\"keys\":[\"bank_id\",\"account\"],\"fields\":[{\"name\":\"bank_id\",\"type\":\"STRING\"},{\"name\":\"account\",\"type\":\"STRING\"},{\"name\":\"name\",\"type\":\"STRING\"},{\"name\":\"sol_id\",\"type\":\"STRING\"},{\"name\":\"currency\",\"type\":\"STRING\"},{\"name\":\"scheme_code\",\"type\":\"STRING\"},{\"name\":\"scheme_type\",\"type\":\"STRING\"},{\"name\":\"gl_sub_head_code\",\"type\":\"STRING\"},{\"name\":\"cust_id\",\"type\":\"STRING\"},{\"name\":\"cif_id\",\"type\":\"STRING\"}]}"
+    },
+    {
+        "id": "9f7b024cbb1f61c7",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaGold",
+        "name": "loanTransactions",
+        "schema": "{\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\"],\"fields\":[{\"name\":\"bank_id\",\"type\":\"STRING\"},{\"name\":\"tran_id\",\"type\":\"STRING\"},{\"name\":\"tran_date\",\"type\":\"STRING\"},{\"name\":\"blank\",\"type\":\"STRING\"}]}"
+    },
+    {
+        "id": "ec1034f4f0a7d501",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaGold",
+        "name": "purgeException",
+        "schema": "{\"fields\":[{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"account\",\"type\":\"string\"},{\"name\":\"prep_date\",\"type\":\"string\"},{\"name\":\"acid\",\"type\":\"string\"},{\"name\":\"excp_code\",\"type\":\"string\"},{\"name\":\"remarks\",\"type\":\"string\"},{\"name\":\"schme_type\",\"type\":\"string\"}],\"key\":[\"bank_id\",\"account\",\"prep_date\"],\"ts\":[]}"
+    },
+    {
+        "id": "47f4bfae2f02017e",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaGold",
+        "name": "jobInfo",
+        "schema": "{\"fields\":[{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"job_id\",\"type\":\"string\"},{\"name\":\"property\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"key\":[\"bank_id\",\"job_id\",\"property\"],\"ts\":[]}"
+    },
+    {
+        "id": "5e140e63641e6906",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaGold",
+        "name": "acctPurge",
+        "schema": "{\"keys\":[\"bank_id\",\"account\"],\"fields\":[{\"name\":\"bank_id\",\"type\":\"String\"},{\"name\":\"account\",\"type\":\"String\"},{\"name\":\"from_date\",\"type\":\"String\"},{\"name\":\"to_date\",\"type\":\"String\"}]}"
+    },
+    {
+        "id": "a858ef46.eabe6",
+        "type": "aqua_config_stream_kafka",
+        "name": "commonKafka",
+        "host": "localhost",
+        "port": "9092"
+    },
+    {
+        "id": "d3cd0168772419c1",
+        "type": "aqua_config_jdbc_connection",
+        "name": "aqua-jdbc-postgres",
+        "url": "jdbc:postgresql:postgres",
+        "driver": "org.postgresql.Driver",
+        "user": "dheerajkumar",
+        "password": ""
+    },
+    {
+        "id": "ed9551c17db0506a",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaGold",
+        "name": "accountFile",
+        "schema": "{\"keys\":[\"bank_id\",\"foracid\"],\"fields\":[{\"name\":\"bank_id\",\"type\":\"STRING\"},{\"name\":\"foracid\",\"type\":\"STRING\"},{\"name\":\"acid\",\"type\":\"STRING\"},{\"name\":\"name\",\"type\":\"STRING\"},{\"name\":\"sol_id\",\"type\":\"STRING\"},{\"name\":\"currency\",\"type\":\"STRING\"},{\"name\":\"scheme_code\",\"type\":\"STRING\"},{\"name\":\"scheme_type\",\"type\":\"STRING\"},{\"name\":\"gl_sub_head_code\",\"type\":\"STRING\"},{\"name\":\"cust_id\",\"type\":\"STRING\"},{\"name\":\"cif_id\",\"type\":\"STRING\"}]}"
+    },
+    {
+        "id": "97158bb7564e3e5e",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "atd",
+        "schema": "{\"fields\":[{\"name\":\"cont_tran_id\",\"type\":\"string\"},{\"name\":\"tran_date\",\"type\":\"string\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"purge_flg\",\"type\":\"string\"},{\"name\":\"part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"rev_reason_code\",\"type\":\"string\"},{\"name\":\"cont_part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"rcre_time\",\"type\":\"string\"},{\"name\":\"reversal_flg\",\"type\":\"string\"},{\"name\":\"acct_transfer_flg\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"string\"},{\"name\":\"cont_tran_date\",\"type\":\"string\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"reversal_comments\",\"type\":\"string\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\",\"part_tran_srl_num\"],\"tsField\":\"ts_cnt\",\"maxTsValue\":9999,\"tsResetLowerBound\":0,\"tsResetUpperBound\":10}"
+    },
+    {
+        "id": "8d42d9d65387e0a4",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "ata",
+        "schema": "{\"fields\":[{\"name\":\"tran_date\",\"type\":\"string\"},{\"name\":\"sol_id\",\"type\":\"string\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"abnrml_tran_code\",\"type\":\"string\"},{\"name\":\"del_flg\",\"type\":\"string\"},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"purge_flg\",\"type\":\"string\"},{\"name\":\"part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"rcre_time\",\"type\":\"string\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"string\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\",\"part_tran_srl_num\",\"abnrml_tran_code\"],\"tsField\":\"ts_cnt\",\"maxTsValue\":9999,\"tsResetLowerBound\":0,\"tsResetUpperBound\":10}"
+    },
+    {
+        "id": "b7bb81daaa70e624",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "pte",
+        "schema": "{\"fields\":[{\"name\":\"tran_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"excp_code\",\"type\":\"string\"},{\"name\":\"del_flg\",\"type\":\"string\"},{\"name\":\"approve_user_id\",\"type\":\"string\"},{\"name\":\"approve_date\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"},{\"name\":\"rcre_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"sol_id\",\"type\":\"string\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"purge_flg\",\"type\":\"string\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\",\"part_tran_srl_num\",\"excp_code\"],\"tsField\":\"ts_cnt\",\"maxTsValue\":9999,\"tsResetLowerBound\":0,\"tsResetUpperBound\":10}"
+    },
+    {
+        "id": "191b072c6ad22845",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "ott",
+        "schema": "{\"fields\":[{\"name\":\"tran_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"del_flg\",\"type\":\"string\"},{\"name\":\"gl_sub_head_code\",\"type\":\"string\"},{\"name\":\"part_tran_type\",\"type\":\"string\"},{\"name\":\"acid\",\"type\":\"string\"},{\"name\":\"value_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"org_tran_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"tran_particular\",\"type\":\"string\"},{\"name\":\"total_offset_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"num_offset_ptran\",\"type\":\"string\"},{\"name\":\"ref_num\",\"type\":\"string\"},{\"name\":\"br_code\",\"type\":\"string\"},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"},{\"name\":\"rcre_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"bank_code\",\"type\":\"string\"},{\"name\":\"sol_id\",\"type\":\"string\"},{\"name\":\"org_acid\",\"type\":\"string\"},{\"name\":\"reversal_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"reversal_value_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"single_reversal_flg\",\"type\":\"string\"},{\"name\":\"pttm_event_id\",\"type\":\"string\"},{\"name\":\"pttm_event_type\",\"type\":\"string\"},{\"name\":\"proxy_posted_user_id\",\"type\":\"string\"},{\"name\":\"proxy_verify_user_id\",\"type\":\"string\"},{\"name\":\"org_entered_user_id\",\"type\":\"string\"},{\"name\":\"ref_acid\",\"type\":\"string\"},{\"name\":\"schm_type\",\"type\":\"string\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"ott_crncy_code\",\"type\":\"string\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"user_part_tran_code\",\"type\":\"string\"},{\"name\":\"purge_flg\",\"type\":\"string\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\",\"part_tran_srl_num\"],\"tsField\":\"ts_cnt\",\"maxTsValue\":9999,\"tsResetLowerBound\":0,\"tsResetUpperBound\":10}"
+    },
+    {
+        "id": "bab433d1fc275956",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "tct",
+        "schema": "{\"fields\":[{\"name\":\"tran_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"contra_tran_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"contra_tran_id\",\"type\":\"string\"},{\"name\":\"contra_part_tran_srl_num\",\"type\":\"string\"},{\"name\":\"del_flg\",\"type\":\"string\"},{\"name\":\"amt_offset\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"},{\"name\":\"rcre_time\",\"type\":\"time\",\"format\":\"yyyy-MM-dd'T'hh:mm:ss\"},{\"name\":\"sol_id\",\"type\":\"string\"},{\"name\":\"crncy_code\",\"type\":\"string\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"entity_cre_flg\",\"type\":\"string\"},{\"name\":\"purge_flg\",\"type\":\"string\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\",\"part_tran_srl_num\",\"contra_tran_date\",\"contra_tran_id\",\"contra_part_tran_srl_num\"],\"tsField\":\"ts_cnt\",\"maxTsValue\":9999,\"tsResetLowerBound\":0,\"tsResetUpperBound\":10}"
+    },
+    {
+        "id": "68cc8216d522abef",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "rtt",
+        "schema": "{\"fields\":[{\"name\":\"tran_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"central_or_local_code\",\"type\":\"string\"},{\"name\":\"sol_id\",\"type\":\"string\"},{\"name\":\"lchg_user_id\",\"type\":\"string\"},{\"name\":\"tran_id\",\"type\":\"string\"},{\"name\":\"cust_or_card_id\",\"type\":\"string\"},{\"name\":\"system_date_time\",\"type\":\"string\"},{\"name\":\"dcc_id\",\"type\":\"string\"},{\"name\":\"req_advc_ind\",\"type\":\"string\"},{\"name\":\"sno\",\"type\":\"string\"},{\"name\":\"key_version\",\"type\":\"long\"},{\"name\":\"rcre_time\",\"type\":\"string\"},{\"name\":\"contra_acid\",\"type\":\"string\"},{\"name\":\"sys_gen_flg\",\"type\":\"string\"},{\"name\":\"bank_id\",\"type\":\"string\"},{\"name\":\"lchg_time\",\"type\":\"string\"},{\"name\":\"ts_cnt\",\"type\":\"long\"},{\"name\":\"cmd\",\"type\":\"string\"},{\"name\":\"tran_amt\",\"type\":\"struct\",\"fields\":[{\"name\":\"ccy\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"double\"}]},{\"name\":\"tran_crncy_code\",\"type\":\"string\"},{\"name\":\"gl_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"},{\"name\":\"mesg\",\"type\":\"string\"},{\"name\":\"rcre_user_id\",\"type\":\"string\"},{\"name\":\"value_date\",\"type\":\"date\",\"format\":\"yyyy-MM-dd\"}],\"keys\":[\"bank_id\",\"tran_date\",\"tran_id\"],\"ts\":[\"ts_cnt\"]}"
+    },
+    {
+        "id": "ac9b0b0f942a9d32",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaSilver",
+        "name": "accountFile",
+        "schema": "{\"keys\":[\"bank_id\",\"account\"],\"fields\":[{\"name\":\"bank_id\",\"type\":\"STRING\"},{\"name\":\"account\",\"type\":\"STRING\"},{\"name\":\"name\",\"type\":\"STRING\"},{\"name\":\"sol_id\",\"type\":\"STRING\"},{\"name\":\"currency\",\"type\":\"STRING\"},{\"name\":\"scheme_code\",\"type\":\"STRING\"},{\"name\":\"scheme_type\",\"type\":\"STRING\"},{\"name\":\"gl_sub_head_code\",\"type\":\"STRING\"},{\"name\":\"cust_id\",\"type\":\"STRING\"},{\"name\":\"cif_id\",\"type\":\"STRING\"}]}"
+    },
+    {
+        "id": "32f4aeec0c7bd6f4",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaGold",
+        "name": "accountFile",
+        "schema": "{\"keys\":[\"bank_id\",\"foracid\"],\"fields\":[{\"name\":\"bank_id\",\"type\":\"STRING\"},{\"name\":\"foracid\",\"type\":\"STRING\"},{\"name\":\"acid\",\"type\":\"STRING\"},{\"name\":\"name\",\"type\":\"STRING\"},{\"name\":\"sol_id\",\"type\":\"STRING\"},{\"name\":\"currency\",\"type\":\"STRING\"},{\"name\":\"scheme_code\",\"type\":\"STRING\"},{\"name\":\"scheme_type\",\"type\":\"STRING\"},{\"name\":\"gl_sub_head_code\",\"type\":\"STRING\"},{\"name\":\"cust_id\",\"type\":\"STRING\"},{\"name\":\"cif_id\",\"type\":\"STRING\"}]}"
+    },
+    {
+        "id": "520506d043cd0cd6",
+        "type": "aqua_config_schema_data",
+        "namespace": "aquaGold",
+        "name": "acctPurge",
+        "schema": "{\"keys\":[\"bank_id\",\"account\"],\"fields\":[{\"name\":\"bank_id\",\"type\":\"String\"},{\"name\":\"account\",\"type\":\"String\"},{\"name\":\"from_date\",\"type\":\"String\"},{\"name\":\"to_date\",\"type\":\"String\"}]}"
+    },
+    {
+        "id": "c6a0bf22.852ab",
+        "type": "aqua_config_storage_destination_hdfs",
+        "name": "hdfs",
+        "host": "localhost",
+        "port": "9000",
+        "rootpath": "/user/dheerajkumar"
+    },
+    {
+        "id": "1bf5a15e2b4eb5fe",
+        "type": "aqua_config_storage_destination_csv",
+        "name": "sampleAddAddressConfig",
+        "header": "true",
+        "delimiter": ","
+    },
+    {
+        "id": "822a0ac9e436c91d",
+        "type": "aqua_config_storage_destination_hdfs_parquet",
+        "name": "sampleHDFSFile",
+        "destination": "c6a0bf22.852ab",
+        "basepath": "archive"
+    },
+    {
+        "id": "f921133a.ba257",
+        "type": "aqua_config_jdbc_connection",
+        "name": "postgres",
+        "url": "jdbc:postgresql:postgres",
+        "driver": "org.postgresql.Driver",
+        "user": "dheerajkumar",
+        "password": ""
+    },
+    {
+        "id": "26224536bab8fd1f",
+        "type": "aqua_config_storage_destination_jdbc",
+        "name": "accountFile",
+        "connection": "f921133a.ba257",
+        "table": "ACCOUNT_FILE"
+    },
+    {
+        "id": "1185744d07eed3ea",
+        "type": "aqua_config_storage_destination_jdbc",
+        "name": "accountFile",
+        "connection": "f921133a.ba257",
+        "table": "ACCOUNT_FILE"
+    },
+    {
+        "id": "89f926070118e247",
+        "type": "aqua_config_storage_destination_hdfs_parquet",
+        "name": "bronzePartTransactions",
+        "destination": "c6a0bf22.852ab",
+        "basepath": "bronze/partTransactions"
+    },
+    {
+        "id": "dfc13bdd68472649",
+        "type": "aqua_config_stream_reader_kafka",
+        "name": "coreTransactions",
+        "stream": "a858ef46.eabe6",
+        "group": "aqua",
+        "offset": "earliest",
+        "topics": "TranArchive_dth,TranArchive_dtd,PETevent",
+        "window": "1000"
+    },
+    {
+        "id": "37396eb3.d24ad2",
+        "type": "aqua_config_error_action_write_kafka",
+        "name": "aquaError",
+        "stream": "a858ef46.eabe6",
+        "topic": "error",
+        "error_db_connection": "d3cd0168772419c1"
+    },
+    {
+        "id": "a69798943debe7c8",
+        "type": "aqua_config_action_write_kafka",
+        "name": "publishTranAcctPurgeAck",
+        "stream": "a858ef46.eabe6",
+        "topic": "aqua-purge",
+        "key": "",
+        "value": "{\"type\":\"aqua.purge.tranAcctPurge\",\"data\":{\"bankId\":\"${#get(meta,'bankId')}\"},\"businessDate\":\"${T(java.time.LocalDate).now().toString()}\"}",
+        "error_db_connection": "d3cd0168772419c1"
+    },
+    {
+        "id": "aec36044dd8295c7",
+        "type": "aqua_config_action_write_kafka",
+        "name": "publishTranPurgeAck",
+        "stream": "a858ef46.eabe6",
+        "topic": "aqua-purge",
+        "key": "",
+        "value": "{\"type\":\"aqua.purge.tranPurge\",\"data\":{\"bankId\":\"${#get(meta,'bankId')}\",\"toDate\":\"${#get(meta,'toDate')}\"},\"businessDate\":\"${T(java.time.LocalDate).now().toString()}\"}",
+        "error_db_connection": "d3cd0168772419c1"
+    },
+    {
+        "id": "a17e06e639b405ad",
+        "type": "aqua_config_stream_reader_kafka",
+        "name": "finquery",
+        "stream": "a858ef46.eabe6",
+        "group": "aqua",
+        "offset": "latest",
+        "topics": "query",
+        "window": "10000"
+    },
+    {
+        "id": "8902f0419c8143d2",
+        "type": "aqua_config_stream_reader_kafka",
+        "name": "purgeAckStream",
+        "stream": "a858ef46.eabe6",
+        "group": "aqua",
+        "offset": "earliest",
+        "topics": "aqua-purge",
+        "window": "1000"
+    },
+    {
+        "id": "59a697c1.9d4a58",
+        "type": "aqua_config_storage_destination_hdfs_parquet",
+        "name": "archive",
+        "destination": "c6a0bf22.852ab",
+        "basepath": "archive"
+    },
+    {
+        "id": "e8b13c18aa281f7f",
+        "type": "aqua_config_storage_destination_hdfs_delta",
+        "name": "archive",
+        "destination": "c6a0bf22.852ab",
+        "basepath": "archive"
+    },
+    {
+        "id": "42ff8cb6d2a51651",
+        "type": "aqua_config_storage_destination_hdfs_parquet",
+        "name": "archivePartTransactions",
+        "destination": "c6a0bf22.852ab",
+        "basepath": "archive"
+    },
+    {
+        "id": "c4e87e24da4c88c0",
+        "type": "aqua_config_storage_destination_file",
+        "name": "nameAddressSample",
+        "fileformat": "csv",
+        "location": "local",
+        "csv_destination": "1bf5a15e2b4eb5fe",
+        "hdfs_destination": "822a0ac9e436c91d",
+        "local_file_destination": "/Users/dheerajkumar/test",
+        "merge": "false",
+        "fileName": "",
+        "mergeDestination": "",
+        "rdbmsMergeDestination": "",
+        "bufferSize": "",
+        "hdfsMergeDestination": "",
+        "mergeDestParams": ""
+    },
+    {
+        "id": "4518e5345e738e67",
+        "type": "aqua_config_storage_destination_hdfs_delta",
+        "name": "models",
+        "destination": "c6a0bf22.852ab",
+        "basepath": "model"
+    },
+    {
+        "id": "ca7e3620fb3cd0c7",
+        "type": "aqua_config_storage_destination_jdbc",
+        "name": "acctPurgeException",
+        "connection": "f921133a.ba257",
+        "table": "Tran_Purge_Exception"
+    },
+    {
+        "id": "dce06e466072b689",
+        "type": "aqua_config_storage_gold_interface",
+        "namespace": "aquaGold",
+        "name": "accountFile",
+        "storage_type": "JDBC",
+        "jdbc_destination": "26224536bab8fd1f"
+    },
+    {
+        "id": "689a72d5.a1727c",
+        "type": "aqua_config_storage_destination_jdbc",
+        "name": "aqua",
+        "connection": "f921133a.ba257",
+        "table": "JOB_INFO"
+    },
+    {
+        "id": "7d98f10223aabc62",
+        "type": "aqua_config_storage_silver_interface",
+        "namespace": "aqua",
+        "name": "models",
+        "format": "delta",
+        "delta_storage": "4518e5345e738e67"
+    },
+    {
+        "id": "c025307c712a38e5",
+        "type": "aqua_config_storage_gold_interface",
+        "namespace": "aquaGold",
+        "name": "accountFile",
+        "storage_type": "JDBC",
+        "jdbc_destination": "1185744d07eed3ea"
+    },
+    {
+        "id": "90c5e605c3983c6d",
+        "type": "aqua_config_storage_bronze_interface",
+        "namespace": "bronze",
+        "name": "partTransactions",
+        "destination": "89f926070118e247"
+    },
+    {
+        "id": "d549eae9.ad9a88",
+        "type": "aqua_config_error_action_write_stream",
+        "namespace": "aqua",
+        "name": "errorWriter",
+        "stream": "kafka-stream",
+        "kafka_stream": "37396eb3.d24ad2"
+    },
+    {
+        "id": "cea0e8e940ba284d",
+        "type": "aqua_config_onsuccess_action",
+        "namespace": "purge",
+        "name": "publishTranAcctPurgeAck",
+        "actiontype": "stream",
+        "stream": "kafka-stream",
+        "kafka_stream": "a69798943debe7c8",
+        "generic": ""
+    },
+    {
+        "id": "d757c5059af263fb",
+        "type": "aqua_config_onsuccess_action",
+        "namespace": "purge",
+        "name": "publishTranPurgeAck",
+        "actiontype": "stream",
+        "stream": "kafka-stream",
+        "kafka_stream": "aec36044dd8295c7",
+        "generic": ""
+    },
+    {
+        "id": "638d766ddf0e36fc",
+        "type": "aqua_config_stream_reader_interface",
+        "namespace": "aqua",
+        "name": "finquery",
+        "stream_type": "kafka-stream",
+        "kafka_stream": "a17e06e639b405ad",
+        "onerror": "d549eae9.ad9a88",
+        "arguments": "{}"
+    },
+    {
+        "id": "cd93fff3ba8e8192",
+        "type": "aqua_config_stream_reader_interface",
+        "namespace": "aqua",
+        "name": "purgeAcknowledgementStream",
+        "stream_type": "kafka-stream",
+        "kafka_stream": "8902f0419c8143d2",
+        "onerror": "d549eae9.ad9a88",
+        "arguments": "{}"
+    },
+    {
+        "id": "e9e1f313.58c9c",
+        "type": "aqua_config_storage_silver_interface",
+        "namespace": "aqua",
+        "name": "archive",
+        "format": "delta",
+        "parquet_storage": "59a697c1.9d4a58",
+        "delta_storage": "e8b13c18aa281f7f"
+    },
+    {
+        "id": "2f5f2a97037c8adc",
+        "type": "aqua_config_storage_silver_interface",
+        "namespace": "aqua",
+        "name": "archiveHdfs",
+        "format": "parquet",
+        "parquet_storage": "42ff8cb6d2a51651",
+        "file_destination": "c4e87e24da4c88c0"
+    },
+    {
+        "id": "6a25355a2ffbda73",
+        "type": "aqua_config_storage_silver_interface",
+        "namespace": "aqua",
+        "name": "models",
+        "format": "delta",
+        "delta_storage": "4518e5345e738e67"
+    },
+    {
+        "id": "715bfec161c7ac00",
+        "type": "aqua_config_storage_gold_interface",
+        "namespace": "aqua",
+        "name": "acctPurgeException",
+        "storage_type": "JDBC",
+        "jdbc_destination": "ca7e3620fb3cd0c7"
+    },
+    {
+        "id": "c0c9853e656d87bb",
+        "type": "aqua_config_storage_gold",
+        "namespace": "aquaGold",
+        "name": "accountFile",
+        "storage": "dce06e466072b689",
+        "dataschema": "ed9551c17db0506a"
+    },
+    {
+        "id": "e317a7fb.87b9a8",
+        "type": "aqua_config_storage_gold_interface",
+        "namespace": "aqua",
+        "name": "jobInfo",
+        "storage_type": "JDBC",
+        "jdbc_destination": "689a72d5.a1727c"
+    },
+    {
+        "id": "58005cf4ebdd38b0",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquaSilver",
+        "name": "atd",
+        "storage": "e9e1f313.58c9c",
+        "path": "atd",
+        "partition_fields": "bank_id,tran_date",
+        "dataschema": "97158bb7564e3e5e"
+    },
+    {
+        "id": "f905625b8dc2951b",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquaSilver",
+        "name": "ata",
+        "storage": "e9e1f313.58c9c",
+        "path": "ata",
+        "partition_fields": "bank_id,tran_date",
+        "dataschema": "8d42d9d65387e0a4"
+    },
+    {
+        "id": "c123fd074703d244",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquaSilver",
+        "name": "pte",
+        "storage": "e9e1f313.58c9c",
+        "path": "pte",
+        "partition_fields": "bank_id,tran_date",
+        "dataschema": "b7bb81daaa70e624"
+    },
+    {
+        "id": "3373c14470c5202c",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquaSilver",
+        "name": "ott",
+        "storage": "e9e1f313.58c9c",
+        "path": "ott",
+        "partition_fields": "bank_id,tran_date",
+        "dataschema": "191b072c6ad22845"
+    },
+    {
+        "id": "06ef801f8eea0642",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquaSilver",
+        "name": "tct",
+        "storage": "e9e1f313.58c9c",
+        "path": "tct",
+        "partition_fields": "bank_id,tran_date",
+        "dataschema": "bab433d1fc275956"
+    },
+    {
+        "id": "31e8b6d359e81673",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquaSilver",
+        "name": "RTT",
+        "storage": "e9e1f313.58c9c",
+        "path": "rtt",
+        "partition_fields": "bank_id,tran_date,sol_id",
+        "dataschema": "68cc8216d522abef"
+    },
+    {
+        "id": "7d6b9782fe5ceabc",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aqua",
+        "name": "accountFile",
+        "storage": "7d98f10223aabc62",
+        "path": "accountFile",
+        "partition_fields": "bank_id",
+        "dataschema": "ac9b0b0f942a9d32"
+    },
+    {
+        "id": "970033f138fc0ffe",
+        "type": "aqua_config_storage_gold",
+        "namespace": "aquaGold",
+        "name": "accountFile",
+        "storage": "c025307c712a38e5",
+        "dataschema": "32f4aeec0c7bd6f4"
+    },
+    {
+        "id": "541b56fd6c39be17",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquaSilver",
+        "name": "ato_account_purge",
+        "storage": "7d98f10223aabc62",
+        "path": "ato_account_purge",
+        "partition_fields": "bank_id,account",
+        "dataschema": "520506d043cd0cd6"
+    },
+    {
+        "id": "54970d4a434f76f6",
+        "type": "aqua_config_storage_bronze",
+        "namespace": "partTransactionBronze",
+        "name": "partTransactions",
+        "storage": "90c5e605c3983c6d",
+        "path": "2023-07-24",
+        "partition_fields": ""
+    },
+    {
+        "id": "21037b0e61dfdd90",
+        "type": "aqua_config_stream_reader_interface",
+        "namespace": "coreBusinessEvents",
+        "name": "transaction",
+        "stream_type": "kafka-stream",
+        "kafka_stream": "dfc13bdd68472649",
+        "onerror": "d549eae9.ad9a88",
+        "onvalidationerror": "",
+        "arguments": "{}"
+    },
+    {
+        "id": "c92c6d1e3c7cc552",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquasilver",
+        "name": "transaction",
+        "storage": "e9e1f313.58c9c",
+        "path": "transaction",
+        "partition_fields": "bank_id,tran_date",
+        "dataschema": "d63b16f9f9bd147b"
+    },
+    {
+        "id": "abb8c14890f75f18",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aquasilver",
+        "name": "partTransaction",
+        "storage": "2f5f2a97037c8adc",
+        "path": "part_transaction",
+        "partition_fields": "bank_id,tran_date,sol_id",
+        "dataschema": "2be824d3fb639401"
+    },
+    {
+        "id": "0407dcdeaad86f78",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aqua",
+        "name": "accountFile",
+        "storage": "6a25355a2ffbda73",
+        "path": "accountFile",
+        "partition_fields": "bank_id",
+        "dataschema": "6e9113dafac05acb"
+    },
+    {
+        "id": "0706eb60d911ad26",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aqua",
+        "name": "loanTransaction",
+        "storage": "6a25355a2ffbda73",
+        "path": "loan/transactions",
+        "partition_fields": "",
+        "dataschema": "9f7b024cbb1f61c7"
+    },
+    {
+        "id": "dafdba9cf51bd9d0",
+        "type": "aqua_config_storage_gold",
+        "namespace": "aqua",
+        "name": "purgeException",
+        "storage": "715bfec161c7ac00",
+        "dataschema": "ec1034f4f0a7d501"
+    },
+    {
+        "id": "926de5f51b2e9f7a",
+        "type": "aqua_config_view",
+        "name": "account",
+        "storage_type": "silver",
+        "silver_storage": "0407dcdeaad86f78",
+        "gold_storage": "c0c9853e656d87bb",
+        "query": ""
+    },
+    {
+        "id": "30fcd9bdb2341560",
+        "type": "aqua_config_view",
+        "name": "account_exception",
+        "storage_type": "gold",
+        "gold_storage": "dafdba9cf51bd9d0",
+        "query": "select account,bank_id,prep_date from tran_purge_exception"
+    },
+    {
+        "id": "36e583ab.f89c2c",
+        "type": "aqua_config_storage_gold",
+        "namespace": "aqua",
+        "name": "jobInfo",
+        "storage": "e317a7fb.87b9a8",
+        "dataschema": "47f4bfae2f02017e"
+    },
+    {
+        "id": "8782e6c59de1c970",
+        "type": "aqua_config_storage_silver",
+        "namespace": "aqua",
+        "name": "account_purge",
+        "storage": "6a25355a2ffbda73",
+        "path": "accountpurge",
+        "partition_fields": "bank_id",
+        "dataschema": "5e140e63641e6906"
+    },
+    {
+        "id": "929d5895c11dcca6",
+        "type": "aqua_config_view",
+        "name": "transaction",
+        "storage_type": "silver",
+        "silver_storage": "abb8c14890f75f18",
+        "query": ""
+    },
+    {
+        "id": "caddf9a4fabaa421",
+        "type": "aqua_config_view",
+        "name": "loantransactions",
+        "storage_type": "silver",
+        "silver_storage": "0706eb60d911ad26",
+        "query": ""
+    },
+    {
+        "id": "85a0beba74212f3b",
+        "type": "aqua_config_view",
+        "name": "account_purge",
+        "storage_type": "silver",
+        "silver_storage": "8782e6c59de1c970",
+        "query": ""
+    },
+    {
+        "id": "cdb5749.2f84688",
+        "type": "aqua_config_view",
+        "name": "job_info",
+        "storage_type": "gold",
+        "gold_storage": "36e583ab.f89c2c",
+        "query": "select bank_id,value from job_info where property='ACCT_PREP_DATE' and job_id='TRANPURGE'"
+    },
+    {
+        "id": "208b1e164b2f6feb",
+        "type": "aqua_config_view",
+        "name": "atd",
+        "storage_type": "silver",
+        "silver_storage": "58005cf4ebdd38b0",
+        "query": ""
+    },
+    {
+        "id": "395b56ee40274bf9",
+        "type": "aqua_config_view",
+        "name": "ata",
+        "storage_type": "silver",
+        "silver_storage": "f905625b8dc2951b",
+        "query": ""
+    },
+    {
+        "id": "0f0325c3e9ee5bad",
+        "type": "aqua_config_view",
+        "name": "pte",
+        "storage_type": "silver",
+        "silver_storage": "c123fd074703d244",
+        "query": ""
+    },
+    {
+        "id": "ee5347b25f8b6f42",
+        "type": "aqua_config_view",
+        "name": "ott",
+        "storage_type": "silver",
+        "silver_storage": "3373c14470c5202c",
+        "query": ""
+    },
+    {
+        "id": "0f4173702a88419d",
+        "type": "aqua_config_view",
+        "name": "tct",
+        "storage_type": "silver",
+        "silver_storage": "06ef801f8eea0642",
+        "query": ""
+    },
+    {
+        "id": "214db00c676c96c8",
+        "type": "aqua_config_view",
+        "name": "rtt",
+        "storage_type": "silver",
+        "silver_storage": "31e8b6d359e81673",
+        "query": ""
+    },
+    {
+        "id": "b3bfdb814b75201c",
+        "type": "aqua_config_view",
+        "name": "account",
+        "storage_type": "silver",
+        "silver_storage": "7d6b9782fe5ceabc",
+        "gold_storage": "970033f138fc0ffe",
+        "query": ""
+    },
+    {
+        "id": "3f5618812b84a487",
+        "type": "aqua_config_view",
+        "name": "ato_account_purge",
+        "storage_type": "silver",
+        "silver_storage": "541b56fd6c39be17",
+        "query": ""
+    },
+    {
+        "id": "c4b5e86486c3df99",
+        "type": "aqua_config_view",
+        "name": "partTransaction",
+        "storage_type": "silver",
+        "silver_storage": "abb8c14890f75f18",
+        "query": ""
+    },
+    {
+        "id": "aa212aec897fcffc",
+        "type": "aqua_config_view",
+        "name": "partTransactionBronze",
+        "storage_type": "bronze",
+        "bronze_storage": "54970d4a434f76f6",
+        "query": ""
+    },
+    {
+        "id": "77e8f2acc88351ac",
+        "type": "aqua_config_view",
+        "name": "job_info",
+        "storage_type": "gold",
+        "gold_storage": "36e583ab.f89c2c",
+        "query": "select bank_id,value from job_info where property='PREP_DATE' and job_id='TRANPURGE' "
+    },
+    {
+        "id": "009f6d4b52b8ee39",
+        "type": "aqua_config_view",
+        "name": "account_purge",
+        "storage_type": "silver",
+        "silver_storage": "8782e6c59de1c970",
+        "query": ""
+    },
+    {
+        "id": "29d6c46fb9a302ce",
+        "type": "aqua_config_view",
+        "name": "job_info",
+        "storage_type": "gold",
+        "gold_storage": "36e583ab.f89c2c",
+        "query": "select bank_id,value from job_info where property='PREP_DATE' and job_id='TRANPURGE' "
+    },
+    {
+        "id": "ad287579efd85eeb",
+        "type": "aqua_config_view",
+        "name": "purge_info",
+        "storage_type": "gold",
+        "gold_storage": "36e583ab.f89c2c",
+        "query": "select bank_id,value from job_info where property='PURGE_DATE' and job_id='TRANPURGE' "
+    },
+    {
+        "id": "d041097b0839844f",
+        "type": "aqua_stream_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "coreBusinessEvents",
+        "name": "Transactions",
+        "stream": "21037b0e61dfdd90",
+        "arguments": "{}",
+        "meta": "{}",
+        "date": "${#get(body,'businessDate')}",
+        "backup": "true",
+        "conditions": [
+            [
+                {
+                    "expression": "${((topic == 'TranArchive_dth')&&(#get(body,'type')=='core.TranArchive_dth'))}"
+                }
+            ]
+        ],
+        "x": 210,
+        "y": 87,
+        "wires": [
+            [
+                "fd187bd9127b9def"
+            ]
+        ]
+    },
+    {
+        "id": "fd187bd9127b9def",
+        "type": "aqua_procedure",
+        "z": "7a9698d2ef68f404",
+        "namespace": "aqua",
+        "name": "transaction",
+        "logger": "false",
+        "inputschematype": "input",
+        "inputschema": "{}",
+        "onsuccess": "",
+        "addnlonsuccess1": "",
+        "addnlonsuccess2": "",
+        "hdfs": "",
+        "x": 494,
+        "y": 89,
+        "wires": [
+            [
+                "f5bd5530705eaf87"
+            ]
+        ]
+    },
+    {
+        "id": "f5bd5530705eaf87",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyDTHSchema",
+        "expression": "{\t   \"tran_date\": data.DTHRecord.tran_date,\t   \"tran_id\": data.DTHRecord.tran_id,\t   \"del_flg\": data.DTHRecord.del_flg,\t   \"tran_type\": data.DTHRecord.tran_type,\t   \"tran_sub_type\": data.DTHRecord.tran_sub_type,\t   \"num_cr_tran_entry\": data.DTHRecord.num_cr_tran_entry,\t   \"num_dr_tran_entry\": data.DTHRecord.num_dr_tran_entry,\t   \"num_cr_tran_pstd\": data.DTHRecord.num_cr_tran_pstd,\t   \"num_dr_tran_pstd\": data.DTHRecord.num_dr_tran_pstd,\t   \"num_tran_vfd\": data.DTHRecord.num_tran_vfd,\t   \"num_tran_deleted\": data.DTHRecord.num_tran_deleted,\t   \"tran_cre_mode\": data.DTHRecord.tran_cre_mode,\t   \"restrict_modify_ind\": data.DTHRecord.restrict_modify_ind,\t   \"remarks\": data.DTHRecord.remarks,\t   \"lchg_user_id\": data.DTHRecord.lchg_user_id,\t   \"lchg_time\": data.DTHRecord.lchg_time,\t   \"rcre_user_id\": data.DTHRecord.rcre_user_id,\t   \"rcre_time\": data.DTHRecord.rcre_time,\t   \"pst_flg\": data.DTHRecord.pst_flg,\t   \"delivery_channel_id\": data.DTHRecord.delivery_channel_id,\t   \"init_sol_id\": data.DTHRecord.init_sol_id,\t   \"ignore_xcpn_flg\": data.DTHRecord.ignore_xcpn_flg,\t   \"num_tran_purged\": data.DTHRecord.num_tran_purged,\t   \"b2k_event_type\": data.DTHRecord.b2k_event_type,\t   \"ts_cnt\": data.DTHRecord.ts_cnt,\t   \"referral_event_type\": data.DTHRecord.referral_event_type,\t   \"bank_id\": data.DTHRecord.bank_id,\t   \"sys_entered_user_mod_flg\": data.DTHRecord.sys_entered_user_mod_flg,\t   \"sys_tran_code\": data.DTHRecord.sys_tran_code,\t   \"user_tran_code\": data.DTHRecord.user_tran_code \t}",
+        "x": 1021,
+        "y": 86,
+        "wires": [
+            [
+                "5ef8526959ae82b5"
+            ]
+        ]
+    },
+    {
+        "id": "5ef8526959ae82b5",
+        "type": "aqua_action_write_silver",
+        "z": "7a9698d2ef68f404",
+        "name": "storeTransactionSilver",
+        "storage": "c92c6d1e3c7cc552",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1280,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7cfeafe86616911a",
+        "type": "aqua_stream_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "coreBusinessEvents",
+        "name": "partTransactions",
+        "stream": "21037b0e61dfdd90",
+        "arguments": "{}",
+        "meta": "{}",
+        "date": "${#get(body,'businessDate')}",
+        "backup": "true",
+        "conditions": [
+            [
+                {
+                    "expression": "${((topic == 'TranArchive_dtd')&&(#get(body,'type')=='core.TranArchive_dtd'))}"
+                }
+            ]
+        ],
+        "x": 150,
+        "y": 200,
+        "wires": [
+            [
+                "084c293f89d244fc"
+            ]
+        ]
+    },
+    {
+        "id": "084c293f89d244fc",
+        "type": "aqua_procedure",
+        "z": "7a9698d2ef68f404",
+        "namespace": "aqua",
+        "name": "partTransaction",
+        "logger": "false",
+        "inputschematype": "input",
+        "inputschema": "{}",
+        "onsuccess": "",
+        "addnlonsuccess1": "",
+        "addnlonsuccess2": "",
+        "hdfs": "",
+        "x": 400,
+        "y": 260,
+        "wires": [
+            [
+                "3642cb0b5e07f014",
+                "95637cd35dbe0993",
+                "e73d9a27252d61a6"
+            ]
+        ]
+    },
+    {
+        "id": "05892bfad873333a",
+        "type": "aqua_action_write_silver",
+        "z": "7a9698d2ef68f404",
+        "name": "storePartTransactionSilver",
+        "storage": "abb8c14890f75f18",
+        "action": "insert",
+        "onsuccess": "",
+        "x": 1180,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3642cb0b5e07f014",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyAccountSchema",
+        "expression": "{\"account\":data.foracid,\t\"bank_id\":data.DTDRecord.bank_id,\t\"name\":data.accountName,\t\"sol_id\":data.DTDRecord.sol_id,\t\"currency\":data.DTDRecord.tran_crncy_code,\t\"scheme_code\":data.schemeCode,\t\"scheme_type\":data.schemeType,\t\"gl_sub_head_code\":data.DTDRecord.gl_sub_head_code,\t\"cust_id\":data.DTDRecord.cust_id,\t\"cif_id\":data.cifId\t}\t",
+        "x": 775,
+        "y": 276,
+        "wires": [
+            [
+                "36f328468040e841"
+            ]
+        ]
+    },
+    {
+        "id": "36f328468040e841",
+        "type": "aqua_action_write_silver",
+        "z": "7a9698d2ef68f404",
+        "name": "storeaccount",
+        "storage": "0407dcdeaad86f78",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1252,
+        "y": 273,
+        "wires": []
+    },
+    {
+        "id": "95637cd35dbe0993",
+        "type": "aqua_filter",
+        "z": "7a9698d2ef68f404",
+        "name": "isLoanTransaction",
+        "conditions": [
+            [
+                {
+                    "expression": "${((#get(body,'data.data.schemetype') == 'LAA')||(#get(body,'data.data.schemetype') == 'CLA'))}"
+                }
+            ]
+        ],
+        "x": 732,
+        "y": 322,
+        "wires": [
+            [
+                "a23b4324f7403b7a"
+            ]
+        ]
+    },
+    {
+        "id": "a23b4324f7403b7a",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyLoanTranIdSchema",
+        "expression": "{\t\"bank_id\":data.data.DTDRecord.bank_id,\t\"tran_id\":data.data.DTDRecord.tran_id,\t\"tran_date\":data.data.DTDRecord.tran_date,\t\"blank\":\"Y\"\t}\t",
+        "x": 981,
+        "y": 322,
+        "wires": [
+            [
+                "f27960ac80832bcc"
+            ]
+        ]
+    },
+    {
+        "id": "f27960ac80832bcc",
+        "type": "aqua_action_write_silver",
+        "z": "7a9698d2ef68f404",
+        "name": "storeLoanTransactionId",
+        "storage": "0706eb60d911ad26",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1294,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5cb8783c60db5c93",
+        "type": "aqua_stream_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "coreBusinessEvents",
+        "name": "purgeExceptionAcct",
+        "stream": "21037b0e61dfdd90",
+        "arguments": "{}",
+        "meta": "{}",
+        "date": "${#get(body,'businessDate')}",
+        "backup": "true",
+        "conditions": [
+            [
+                {
+                    "expression": "${((topic == 'PETevent')&&(#get(body,'type')=='core.PETevent'))}"
+                }
+            ]
+        ],
+        "x": 224,
+        "y": 446,
+        "wires": [
+            [
+                "cc503a202b1b81b0"
+            ]
+        ]
+    },
+    {
+        "id": "cc503a202b1b81b0",
+        "type": "aqua_procedure",
+        "z": "7a9698d2ef68f404",
+        "namespace": "aqua",
+        "name": "purgeExceptionAcct",
+        "logger": "false",
+        "inputschematype": "input",
+        "inputschema": "{}",
+        "onsuccess": "",
+        "addnlonsuccess1": "",
+        "addnlonsuccess2": "",
+        "hdfs": "",
+        "x": 524,
+        "y": 446,
+        "wires": [
+            [
+                "3a9215aac6f93e72",
+                "133caafc981f105b",
+                "c03514536da6f407"
+            ]
+        ]
+    },
+    {
+        "id": "3a9215aac6f93e72",
+        "type": "aqua_transform_arrayjsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyPurgeAcctSchema",
+        "expression": "$map(data.PETRecord, function($v, $i, $a) { \t{ 'acid': $v.acid, \t  'excp_code': $v.excp_code, \t  'prep_date':  $substring(subject, 7, 10), \t  'account':    $v.foracid, \t  'schme_type': $v.schm_type, \t  'remarks': $v.remarks, \t  'bank_id': $v.bank_id }\t  })",
+        "x": 789,
+        "y": 394,
+        "wires": [
+            [
+                "d69d21d9f7ae0d65"
+            ]
+        ]
+    },
+    {
+        "id": "d69d21d9f7ae0d65",
+        "type": "aqua_action_write_gold",
+        "z": "7a9698d2ef68f404",
+        "name": "storePurgeExceptionAccount",
+        "storage": "dafdba9cf51bd9d0",
+        "category": "Action",
+        "action": "upsert",
+        "StreamAction": "Append",
+        "onsuccess": "",
+        "x": 1304,
+        "y": 391,
+        "wires": []
+    },
+    {
+        "id": "57d0c3fc185abd21",
+        "type": "aqua_batch_sql_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "purge",
+        "name": "tranAcctPurge",
+        "query": "select\na.bank_id as bank_id ,\na.account as account,\nap.from_date as ifrom_date,\nap.to_date as ito_date,\nae.account excp_account,\nji.value prep_date,\npi.value purge_date \nfrom account a left join account_purge ap on (a.bank_id = ap.bank_id and a.account=ap.account) \nleft join job_info ji on (a.bank_id = ji.bank_id ) \nleft join account_exception ae on ( a.bank_id = ae.bank_id and a.account=ae.account and ae.prep_date = ji.value ) \nleft outer join purge_info pi on (a.bank_id=pi.bank_id) \nwhere a.scheme_type != 'LAA' and a.scheme_type !='CLA'\nand ji.bank_id=  '${#get(params,'bankId')}'",
+        "onerror": "d549eae9.ad9a88",
+        "validatorClass": "com.fininfra.aqua.extn.purge.tranAcctPurge.TranAcctPurgeValidator",
+        "validatorParams": "{\"driver\":\"org.postgresql.Driver\",\"url\":\"jdbc:postgresql://localhost/postgres\",\"user\":\"dheerajkumar\",\"password\":\"\"}",
+        "arguments": "{\"bankId\":\"01\"}",
+        "logger": "false",
+        "meta": "{}",
+        "pagesize": "1000",
+        "numofviews": "5",
+        "view1": "926de5f51b2e9f7a",
+        "view2": "30fcd9bdb2341560",
+        "view3": "009f6d4b52b8ee39",
+        "view4": "29d6c46fb9a302ce",
+        "view5": "ad287579efd85eeb",
+        "view6": "",
+        "view7": "",
+        "view8": "",
+        "view9": "",
+        "view10": "",
+        "x": 159,
+        "y": 589,
+        "wires": [
+            [
+                "e36f805ce081b456"
+            ]
+        ]
+    },
+    {
+        "id": "133caafc981f105b",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyExcludedDate",
+        "expression": "{\t   'bank_id' : $reduce(\t       $lookup(data.PETRecord,'bank_id'),\t       function($i,$j){$i}\t   ),\t   'job_id':'TRANPURGE',\t   'property': 'PREP_DATE',\t   'value': $substring(subject,7,10)\t}",
+        "x": 778,
+        "y": 446,
+        "wires": [
+            [
+                "3d04dafbe5a35e16"
+            ]
+        ]
+    },
+    {
+        "id": "3d04dafbe5a35e16",
+        "type": "aqua_action_write_gold",
+        "z": "7a9698d2ef68f404",
+        "name": "updateJobInfo",
+        "storage": "36e583ab.f89c2c",
+        "category": "Action",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1267,
+        "y": 443,
+        "wires": []
+    },
+    {
+        "id": "9d338183c52c67c3",
+        "type": "aqua_procedure",
+        "z": "7a9698d2ef68f404",
+        "namespace": "aqua",
+        "name": "tranAcctPurge",
+        "logger": "false",
+        "inputschematype": "input",
+        "inputschema": "{}",
+        "onsuccess": "cea0e8e940ba284d",
+        "addnlonsuccess1": "",
+        "addnlonsuccess2": "",
+        "hdfs": "",
+        "x": 791,
+        "y": 591,
+        "wires": [
+            [
+                "114e984557aa39cf"
+            ]
+        ]
+    },
+    {
+        "id": "e36f805ce081b456",
+        "type": "aqua_generic_transformer",
+        "z": "7a9698d2ef68f404",
+        "name": "tranAccountPurge",
+        "transformer": "06a62e7f99345e7e",
+        "conditions": [
+            [
+                {
+                    "expression": ""
+                }
+            ]
+        ],
+        "params": "{}",
+        "x": 360,
+        "y": 590,
+        "wires": [
+            [
+                "b533c3aa687717be"
+            ]
+        ]
+    },
+    {
+        "id": "b533c3aa687717be",
+        "type": "aqua_filter",
+        "z": "7a9698d2ef68f404",
+        "name": "ignoreEmptyRecords",
+        "conditions": [
+            [
+                {
+                    "expression": "${!((#get(body,'from_date') == '')|| (#get(body,'to_date') == ''))}"
+                }
+            ]
+        ],
+        "x": 571,
+        "y": 591,
+        "wires": [
+            [
+                "9d338183c52c67c3"
+            ]
+        ]
+    },
+    {
+        "id": "114e984557aa39cf",
+        "type": "aqua_action_write_silver",
+        "z": "7a9698d2ef68f404",
+        "name": "updateAcctTranPurge",
+        "storage": "8782e6c59de1c970",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1040,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "42ba3379c9b17a80",
+        "type": "aqua_batch_sql_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "purge",
+        "name": "tranPurge",
+        "query": "select\nconcat_ws('::',date_format(t.tran_date,'dd-MM-yyyy HH:mm:SS'),t.tran_id,t.part_tran_srl_num,t.bank_id) as tran_key,\nconcat_ws('||',collect_set(a.abnrml_tran_code)) as ata,\nconcat_ws('||',collect_set(ad.part_tran_srl_num)) as atd,\nconcat_ws('||',collect_set(pt.excp_code)) as pte,\nconcat_ws('||',collect_set(ot.part_tran_srl_num)) as ott,\nconcat_ws('||',collect_set(concat_ws('::',tc.contra_tran_date,tc.contra_tran_id,tc.contra_part_tran_srl_num))) as tct from\n( select t.part_tran_srl_num,t.tran_id,t.tran_date,t.bank_id from transaction t\nleft join account_purge ap on ( t.tran_date <= ap.to_date  and t.tran_date >= ap.from_date and t.foracid=ap.account and t.bank_id=ap.bank_id)\njoin job_info ji on ( ap.bank_id= ji.bank_id and ap.to_date=ji.value)\nand concat(t.tran_date,'|',t.tran_id)\nnot in ( select concat(tran_date,'|',tran_id) from loantransactions)\nand t.tran_date <= '${#get(params,'toDate')}' ) as t left join ata a on t.tran_id=a.tran_id and t.tran_date=a.tran_date and t.part_tran_srl_num=a.part_tran_srl_num and t.bank_id=a.bank_id left join atd ad on t.tran_id=ad.tran_id and t.part_tran_srl_num=ad.part_tran_srl_num and t.tran_date=ad.tran_date and t.bank_id=ad.bank_id left join pte pt on t.tran_id=pt.tran_id and t.part_tran_srl_num=pt.part_tran_srl_num and t.tran_date=pt.tran_date and t.bank_id=pt.bank_id left join ott ot on t.tran_id=ot.tran_id and t.part_tran_srl_num=ot.part_tran_srl_num and t.tran_date=ot.tran_date and t.bank_id=ot.bank_id left join tct tc on t.tran_id=tc.tran_id and t.part_tran_srl_num=tc.part_tran_srl_num and t.tran_date=tc.tran_date and t.bank_id=tc.bank_id\ngroup by t.part_tran_srl_num,\nt.tran_date,t.tran_id,t.bank_id",
+        "onerror": "d549eae9.ad9a88",
+        "validatorClass": "com.fininfra.aqua.extn.purge.tranPurge.TranPurgeValidator",
+        "validatorParams": "{\"bankId\":\"01\"}",
+        "arguments": "{\"driver\":\"org.postgresql.Driver\",\"url\":\"jdbc:postgresql:postgres\",\"user\":\"dheerajkumar\",\"password\":\"\"}",
+        "logger": "false",
+        "meta": "{}",
+        "pagesize": "1000",
+        "numofviews": "9",
+        "view1": "929d5895c11dcca6",
+        "view2": "caddf9a4fabaa421",
+        "view3": "85a0beba74212f3b",
+        "view4": "cdb5749.2f84688",
+        "view5": "208b1e164b2f6feb",
+        "view6": "395b56ee40274bf9",
+        "view7": "0f0325c3e9ee5bad",
+        "view8": "ee5347b25f8b6f42",
+        "view9": "0f4173702a88419d",
+        "view10": "214db00c676c96c8",
+        "view11": "b3bfdb814b75201c",
+        "view12": "3f5618812b84a487",
+        "view13": "b3bfdb814b75201c",
+        "view14": "b3bfdb814b75201c",
+        "view15": "b3bfdb814b75201c",
+        "x": 154,
+        "y": 716,
+        "wires": [
+            [
+                "f899273e1e323fc8"
+            ]
+        ]
+    },
+    {
+        "id": "f899273e1e323fc8",
+        "type": "aqua_procedure",
+        "z": "7a9698d2ef68f404",
+        "namespace": "aqua",
+        "name": "tranPurge",
+        "logger": "false",
+        "inputschematype": "input",
+        "inputschema": "{}",
+        "onsuccess": "d757c5059af263fb",
+        "addnlonsuccess1": "",
+        "addnlonsuccess2": "",
+        "hdfs": "",
+        "x": 363,
+        "y": 716,
+        "wires": [
+            [
+                "a82275a69d886232"
+            ]
+        ]
+    },
+    {
+        "id": "a82275a69d886232",
+        "type": "aqua_generic_action",
+        "z": "7a9698d2ef68f404",
+        "name": "purgewriter",
+        "destination": "8aeac40f1f2aeee5",
+        "conditions": [
+            [
+                {
+                    "expression": ""
+                }
+            ]
+        ],
+        "params": "{\"topic\":\"purgekeys\",\"key_fields\":[\"tran_key\",\"tct\",\"ata\",\"atd\",\"ott\",\"pte\"],\"acks\":\"1\",\"bootstrap.servers\":\"localhost:9092\",\"user\":\"dheerajkumar\",\"password\":\"\",\"url\":\"jdbc:postgresql:postgres\",\"driver\":\"org.postgresql.Driver\"}",
+        "onsuccess": "",
+        "x": 550,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "30bd83e86103ef5d",
+        "type": "aqua_query_deferred",
+        "z": "7a9698d2ef68f404",
+        "namespace": "finquery",
+        "name": "accountTrans",
+        "desc": "Account Transaction",
+        "topic": "query",
+        "eventtype": "accountTransaction",
+        "stream": "638d766ddf0e36fc",
+        "arguments": "{\"jobname\":\"aqua.finquery\",\"configreader\":\"com.fininfra.aqua.cfg.extn.DefaultConfigReader\",\"type\":\"stream\",\"params\":[\"file=aqua-finquery.json\"]}",
+        "streamasview": "input",
+        "query": "select\nconcat(t.tran_date,t.tran_id,t.part_tran_srl_num) as key,\n        t.bank_id as bankId,\n        t.foracid as account,\n        t.tran_id as tranId,\n        t.tran_date as tranDate,\n        t.pstd_date as pstdDate,\n        t.value_date as valueDate,\n        t.gl_date as glDate,\n        t.tran_type as tranType,\n        t.tran_sub_type as tranSubType,\n        t.part_tran_srl_num as partTranSrlNum,\n        t.tran_crncy_code as tranCrncyCode,\n        t.tran_particular as tranParticular,\n        t.tran_amt as tranAmt,\n        t.part_tran_type as partTranType,\n        t.pstd_flg as pstdFlg,\n        t.del_flg as delFlg,\n        t.instrmnt_type as instrmntType,\n        t.instrmnt_date as instrmntDate,\n        t.instrmnt_num as instrmntNum,\n        t.instrmnt_alpha as instrmntAlpha,\n        t.vfd_user_id vfdUserId,\n        t.svs_tran_id svsTranId,\n        t.referral_id referralId\nfrom input i join partTransaction t\nwhere t.foracid = '${#get(body,\"params.account\")}'\nand t.bank_id = i.params.bankId\nand t.tran_date >= i.params.fromDate\nand t.tran_date <= i.params.toDate\n ${#condition((#get(body,'params.key')!=null),' and concat(t.tran_date,t.tran_id,t.part_tran_srl_num) > i.params.key ',' ')}\norder by tranDate,pstdDate,tranId,partTranSrlNum",
+        "api": "{\"resp_fields\":{\"fields\":[{\"name\":\"bankId\",\"type\":\"String\",\"desc\":\"Bank Id\"},{\"name\":\"account\",\"type\":\"String\",\"desc\":\"Account Number\"},{\"name\":\"tranId\",\"type\":\"String\",\"desc\":\"Transaction Id\"},{\"name\":\"tranDate\",\"type\":\"String\",\"desc\":\"Transaction Date\"},{\"name\":\"partTranSrlNum\",\"type\":\"String\",\"desc\":\"Part Tran Serial Num\"},{\"name\":\"pstdDate\",\"type\":\"String\",\"desc\":\"Posted Date\"},{\"name\":\"valueDate\",\"type\":\"String\",\"desc\":\"Value Date\"},{\"name\":\"glDate\",\"type\":\"String\",\"desc\":\"GL date\"},{\"name\":\"tranType\",\"type\":\"String\",\"desc\":\"Transaction Type\"},{\"name\":\"tranSubType\",\"type\":\"String\",\"desc\":\"Transaction Sub Type\"},{\"name\":\"tranCrncyCode\",\"type\":\"String\",\"desc\":\"Account Currency\"},{\"name\":\"tranParticular\",\"type\":\"String\",\"desc\":\"Transaction Particular\"},{\"name\":\"tranAmt\",\"type\":\"String\",\"desc\":\"Transaction Amount\"},{\"name\":\"partTranType\",\"type\":\"String\",\"desc\":\"Cr/ Dr\"},{\"name\":\"pstdFlg\",\"type\":\"String\",\"desc\":\"Posted flag\"},{\"name\":\"delFlg\",\"type\":\"String\",\"desc\":\"Deletion flag\"},{\"name\":\"instrmntType\",\"type\":\"String\",\"desc\":\"Instrument Type\"},{\"name\":\"instrmntDate\",\"type\":\"String\",\"desc\":\"Instrument Date\"},{\"name\":\"instrmntNum\",\"type\":\"String\",\"desc\":\"Instrument Number\"},{\"name\":\"instrmntAlpha\",\"type\":\"String\",\"desc\":\"Instrument Alpha\"},{\"name\":\"vfdUserId\",\"type\":\"String\",\"desc\":\"Verified Used Id\"},{\"name\":\"svsTranId\",\"type\":\"String\",\"desc\":\"Signature Verification System Id\"},{\"name\":\"referralId\",\"type\":\"String\",\"desc\":\"Referral Id\"}]},\"query_params\":{\"fields\":[{\"name\":\"bankId\",\"type\":\"String\",\"desc\":\"Bank Id\",\"required\":true},{\"name\":\"account\",\"type\":\"String\",\"desc\":\"Account\",\"required\":true},{\"name\":\"fromDate\",\"type\":\"String\",\"desc\":\"from Transaction Date\",\"required\":true},{\"name\":\"toDate\",\"type\":\"String\",\"desc\":\"to Transaction Date\",\"required\":true}]}}",
+        "disabled": "false",
+        "maxRecs": "500",
+        "numofviews": "1",
+        "action": "",
+        "view1": "c4b5e86486c3df99",
+        "view2": "",
+        "view3": "",
+        "view4": "",
+        "view5": "",
+        "view6": "",
+        "view7": "",
+        "view8": "",
+        "view9": "",
+        "view10": "",
+        "x": 160,
+        "y": 1080,
+        "wires": [
+            [
+                "f5607c475ec28758"
+            ]
+        ]
+    },
+    {
+        "id": "f5607c475ec28758",
+        "type": "aqua_generic_action",
+        "z": "7a9698d2ef68f404",
+        "name": "reportWriter",
+        "destination": "9187c8c53eab7550",
+        "conditions": [
+            [
+                {
+                    "expression": ""
+                }
+            ]
+        ],
+        "params": "{\"user\":\"pradoshnair\",\"password\":\"\",\"url\":\"jdbc:postgresql:pradoshnair\",\"table\":\"reporttable\",\"driver\":\"org.postgresql.Driver\",\"mode\":\"Append\"}",
+        "onsuccess": "",
+        "x": 430,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "d7a02b63ee3d09b9",
+        "type": "aqua_query_deferred",
+        "z": "7a9698d2ef68f404",
+        "namespace": "finquery",
+        "name": "accountPartTrans",
+        "desc": "Account Part Transaction",
+        "topic": "query",
+        "eventtype": "accountPartTrans",
+        "stream": "638d766ddf0e36fc",
+        "arguments": "{\"jobname\":\"aqua.finquery\",\"configreader\":\"com.fininfra.aqua.cfg.extn.DefaultConfigReader\",\"type\":\"stream\",\"params\":[\"file=aqua-finquery.json\"]}",
+        "streamasview": "input",
+        "query": "select\nt.tran_id as tranId,\nt.tran_date as tranDate,\nt.tran_amt as tranAmt,\nt.foracid as account, \nt.part_tran_type as partTranType,\nt.part_tran_srl_num as partTranSrlNum,\nt.tran_crncy_code as tranCrncyCode, \nt.tran_particular as tranParticular,\nt.gl_date as glDate,\nt.value_date as valueDate, \nt.pstd_flg as pstdFlg,\nt.del_flg as delFlg,\nt.vfd_user_id as vfdUserId, \nt.sol_id as solId,\nt.acct_name as acctName\nt.bank_id as bankId,\nfrom input i join partTransaction t\nwhere t.foracid = i.params.account\nand t.bank_id = i.params.bankId\nand t.tran_date = i.params.tranDate\nand t.tran_id = i.params.tranId\norder by partTranSrlNum",
+        "api": "{\"resp_fields\":{\"fields\":[{\"name\":\"tranId\",\"type\":\"String\",\"desc\":\"Transaction Id\"},{\"name\":\"tranDate\",\"type\":\"String\",\"desc\":\"Transaction Date\"},{\"name\":\"tranAmt\",\"type\":\"String\",\"desc\":\"Transaction Amount\"},{\"name\":\"account\",\"type\":\"String\",\"desc\":\"Account on which the transaction happened\"},{\"name\":\"partTranType\",\"type\":\"String\",\"desc\":\"Cr/ Dr\"},{\"name\":\"partTranSrlNum\",\"type\":\"String\",\"desc\":\"Part Tran Serial Num\"},{\"name\":\"tranCrncyCode\",\"type\":\"String\",\"desc\":\"Account Currency\"},{\"name\":\"tranParticular\",\"type\":\"String\",\"desc\":\"Transaction Particular\"},{\"name\":\"glDate\",\"type\":\"String\",\"desc\":\"GL date\"},{\"name\":\"valueDate\",\"type\":\"String\",\"desc\":\"Value Date\"},{\"name\":\"pstdFlg\",\"type\":\"String\",\"desc\":\"Posted flag\"},{\"name\":\"delFlg\",\"type\":\"String\",\"desc\":\"Deletion flag\"},{\"name\":\"vfdUserId\",\"type\":\"String\",\"desc\":\"Verified Used Id\"},{\"name\":\"solId\",\"type\":\"String\",\"desc\":\"Service outlet of the account\"},{\"name\":\"acctName\",\"type\":\"String\",\"desc\":\"Name of the account\"},{\"name\":\"bankId\",\"type\":\"String\",\"desc\":\"Multi entity bank Id\"}]},\"query_params\":{\"fields\":[{\"name\":\"bankId\",\"type\":\"String\",\"desc\":\"Bank Id\",\"required\":true},{\"name\":\"account\",\"type\":\"String\",\"desc\":\"Account\",\"required\":true},{\"name\":\"tranDate\",\"type\":\"String\",\"desc\":\"Transaction Date\",\"required\":true},{\"name\":\"tranId\",\"type\":\"String\",\"desc\":\"Transaction Id\",\"required\":true}]}}",
+        "disabled": "false",
+        "maxRecs": "",
+        "numofviews": "1",
+        "action": "",
+        "view1": "c4b5e86486c3df99",
+        "view2": "",
+        "view3": "",
+        "view4": "",
+        "view5": "",
+        "view6": "",
+        "view7": "",
+        "view8": "",
+        "view9": "",
+        "view10": "",
+        "x": 170,
+        "y": 1140,
+        "wires": [
+            [
+                "f5607c475ec28758"
+            ]
+        ]
+    },
+    {
+        "id": "f04aeb0fd09e7662",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyMaxRecords",
+        "expression": "{\t   'bank_id' : $reduce(\t       $lookup(data.PETRecord,'bank_id'),\t       function($i,$j){$i}\t   ),\t   'job_id':'TRANPURGE',\t   'property': 'PREP_COUNT',\t   'value': $substringAfter(\t       $substringBefore($substringAfter(subject,\"/\"),\"/\"),\t       \":\"\t   )\t}",
+        "x": 1067,
+        "y": 510,
+        "wires": [
+            [
+                "ec95b1010d67c68c"
+            ]
+        ]
+    },
+    {
+        "id": "ec95b1010d67c68c",
+        "type": "aqua_action_write_gold",
+        "z": "7a9698d2ef68f404",
+        "name": "updateJobInfoAndEmitCompletion",
+        "storage": "36e583ab.f89c2c",
+        "category": "Action",
+        "action": "upsert",
+        "StreamAction": "Overwrite",
+        "onsuccess": "",
+        "x": 1327,
+        "y": 510,
+        "wires": []
+    },
+    {
+        "id": "c03514536da6f407",
+        "type": "aqua_transform_addmeta",
+        "z": "7a9698d2ef68f404",
+        "name": "addkey",
+        "key": "key",
+        "value": "${#get(body,'subject')}",
+        "x": 753,
+        "y": 510,
+        "wires": [
+            [
+                "e31ac534aef8e6fa"
+            ]
+        ]
+    },
+    {
+        "id": "e31ac534aef8e6fa",
+        "type": "aqua_transform_addmeta",
+        "z": "7a9698d2ef68f404",
+        "name": "addType",
+        "key": "type",
+        "value": "${#get(body,'type')}",
+        "x": 897,
+        "y": 510,
+        "wires": [
+            [
+                "f04aeb0fd09e7662"
+            ]
+        ]
+    },
+    {
+        "id": "b2dff5d80535eca7",
+        "type": "aqua_query_deferred",
+        "z": "7a9698d2ef68f404",
+        "namespace": "finquery",
+        "name": "accountPostedTrans",
+        "desc": "Fetch the entry and verify users.",
+        "topic": "query",
+        "eventtype": "transactionVerifyStatus",
+        "stream": "638d766ddf0e36fc",
+        "arguments": "{\"jobname\":\"aqua.finquery\",\"configreader\":\"com.fininfra.aqua.cfg.extn.DefaultConfigReader\",\"type\":\"stream\",\"params\":[\"file=aqua-finquery.json\"]}",
+        "streamasview": "input",
+        "query": "select\nconcat(t.tran_date,t.tran_id,t.part_tran_srl_num) as key,\n        t.tran_date as tranDate,\n        t.value_date as valueDate,\n        t.gl_date as glDate,\n        t.tran_particular as tranParticular,\n        t.tran_amt as tranAmt,\n        t.part_tran_type as partTranType,\n        t.instrmnt_num as instrmntNum,\n        t.entry_user_id entryUserId,\n        t.vfd_user_id vfdUserId\nfrom partTransaction t\nwhere t.foracid = '${#get(body,\"params.account\")}'\nand t.bank_id = '${#get(body,\"params.bankId\")}'\nand t.tran_date => '${#get(body,\"params.fromDate\")}'\nand t.tran_date <= '${#get(body,\"params.toDate\")}'\nand t.del_flg != 'Y'\nand t.pstd_flg='Y'\n ${#condition((#get(body,'params.key')!=null),' and concat(t.tran_date,t.tran_id,t.part_tran_srl_num) > i.params.key ',' ')}\norder by key,tranDate",
+        "api": "{\"resp_fields\":{\"fields\":[{\"name\":\"tranDate\",\"type\":\"String\",\"desc\":\"Transaction Date\"},{\"name\":\"valueDate\",\"type\":\"String\",\"desc\":\"Value Date\"},{\"name\":\"glDate\",\"type\":\"String\",\"desc\":\"GL date\"},{\"name\":\"tranParticular\",\"type\":\"String\",\"desc\":\"Transaction Particular\"},{\"name\":\"tranAmt\",\"type\":\"String\",\"desc\":\"Transaction Amount\"},{\"name\":\"partTranType\",\"type\":\"String\",\"desc\":\"Cr/ Dr\"},{\"name\":\"instrmntNum\",\"type\":\"String\",\"desc\":\"Instrument Number\"},{\"name\":\"entryUserId\",\"type\":\"String\",\"desc\":\" Used Id who created the transaction\"},{\"name\":\"vfdUserId\",\"type\":\"String\",\"desc\":\"Verified Used Id\"}]},\"query_params\":{\"fields\":[{\"name\":\"bankId\",\"type\":\"String\",\"desc\":\"Bank Id\",\"required\":true},{\"name\":\"account\",\"type\":\"String\",\"desc\":\"Account\",\"required\":true},{\"name\":\"fromDate\",\"type\":\"String\",\"desc\":\"from Transaction Date\",\"required\":true},{\"name\":\"toDate\",\"type\":\"String\",\"desc\":\"to Transaction Date\",\"required\":true}]}}",
+        "disabled": "false",
+        "maxRecs": "500",
+        "numofviews": "1",
+        "action": "",
+        "view1": "c4b5e86486c3df99",
+        "view2": "",
+        "view3": "",
+        "view4": "",
+        "view5": "",
+        "view6": "",
+        "view7": "",
+        "view8": "",
+        "view9": "",
+        "view10": "",
+        "x": 180,
+        "y": 1200,
+        "wires": [
+            [
+                "f5607c475ec28758"
+            ]
+        ]
+    },
+    {
+        "id": "e73d9a27252d61a6",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyDTDSchema",
+        "expression": "{\t   \"tran_date\": data.DTDRecord.tran_date,\t   \"tran_id\": data.DTDRecord.tran_id,\t   \"part_tran_srl_num\": data.DTDRecord.part_tran_srl_num,\t   \"del_flg\": data.DTDRecord.del_flg,\t   \"tran_type\": data.DTDRecord.tran_type,\t   \"tran_sub_type\": data.DTDRecord.tran_sub_type,\t   \"part_tran_type\": data.DTDRecord.part_tran_type,\t   \"gl_sub_head_code\": data.DTDRecord.gl_sub_head_code,\t   \"acid\": data.DTDRecord.acid,\t   \"value_date\": data.DTDRecord.value_date,\t   \"tran_amt\": data.DTDRecord.tran_amt,\t   \"tran_particular\": data.DTDRecord.tran_particular,\t   \"entry_user_id\": data.DTDRecord.entry_user_id,\t   \"pstd_user_id\": data.DTDRecord.pstd_user_id,\t   \"vfd_user_id\": data.DTDRecord.vfd_user_id,\t   \"entry_date\": data.DTDRecord.entry_date,\t   \"pstd_date\": data.DTDRecord.pstd_date,\t   \"vfd_date\": data.DTDRecord.vfd_date,\t   \"rpt_code\": data.DTDRecord.rpt_code,\t   \"ref_num\": data.DTDRecord.ref_num,\t   \"instrmnt_type\": data.DTDRecord.instrmnt_type,\t   \"instrmnt_date\": data.DTDRecord.instrmnt_date,\t   \"instrmnt_num\": data.DTDRecord.instrmnt_num,\t   \"instrmnt_alpha\": data.DTDRecord.instrmnt_alpha,\t   \"tran_rmks\": data.DTDRecord.tran_rmks,\t   \"pstd_flg\": data.DTDRecord.pstd_flg,\t   \"prnt_advc_ind\": data.DTDRecord.prnt_advc_ind,\t   \"amt_reservation_ind\": data.DTDRecord.amt_reservation_ind,\t   \"reservation_amt\": data.DTDRecord.reservation_amt,\t   \"restrict_modify_ind\": data.DTDRecord.restrict_modify_ind,\t   \"lchg_user_id\": data.DTDRecord.lchg_user_id,\t   \"lchg_time\": data.DTDRecord.lchg_time,\t   \"rcre_user_id\": data.DTDRecord.rcre_user_id,\t   \"rcre_time\": data.DTDRecord.rcre_time,\t   \"cust_id\": data.DTDRecord.cust_id,\t   \"voucher_print_flg\": data.DTDRecord.voucher_print_flg,\t   \"module_id\": data.DTDRecord.module_id,\t   \"br_code\": data.DTDRecord.br_code,\t   \"fx_tran_amt\": data.DTDRecord.fx_tran_amt,\t   \"rate_code\": data.DTDRecord.rate_code,\t   \"rate\": data.DTDRecord.rate,\t   \"crncy_code\": data.DTDRecord.crncy_code,\t   \"navigation_flg\": data.DTDRecord.navigation_flg,\t   \"tran_crncy_code\": data.DTDRecord.tran_crncy_code,\t   \"ref_crncy_code\": data.DTDRecord.ref_crncy_code,\t   \"ref_amt\": data.DTDRecord.ref_amt,\t   \"sol_id\": data.DTDRecord.sol_id,\t   \"bank_code\": data.DTDRecord.bank_code,\t   \"trea_ref_num\": data.DTDRecord.trea_ref_num,\t   \"trea_rate\": data.DTDRecord.trea_rate,\t   \"ts_cnt\": data.DTDRecord.ts_cnt,\t   \"gst_upd_flg\": data.DTDRecord.gst_upd_flg,\t   \"iso_flg\": data.DTDRecord.iso_flg,\t   \"eabfab_upd_flg\": data.DTDRecord.eabfab_upd_flg,\t   \"lift_lien_flg\": data.DTDRecord.lift_lien_flg,\t   \"proxy_post_ind\": data.DTDRecord.proxy_post_ind,\t   \"si_srl_num\": data.DTDRecord.si_srl_num,\t   \"si_org_exec_date\": data.DTDRecord.si_org_exec_date,\t   \"pr_srl_num\": data.DTDRecord.pr_srl_num,\t   \"serial_num\": data.DTDRecord.serial_num,\t   \"del_memo_pad\": data.DTDRecord.del_memo_pad,\t   \"uad_module_id\": data.DTDRecord.uad_module_id,\t   \"uad_module_key\": data.DTDRecord.uad_module_key,\t   \"reversal_date\": data.DTDRecord.reversal_date,\t   \"reversal_value_date\": data.DTDRecord.reversal_value_date,\t   \"pttm_event_type\": data.DTDRecord.pttm_event_type,\t   \"proxy_acid\": data.DTDRecord.proxy_acid,\t   \"tod_entity_type\": data.DTDRecord.tod_entity_type,\t   \"tod_entity_id\": data.DTDRecord.tod_entity_id,\t   \"dth_init_sol_id\": data.DTDRecord.dth_init_sol_id,\t   \"regularization_amt\": data.DTDRecord.regularization_amt,\t   \"principal_portion_amt\": data.DTDRecord.principal_portion_amt,\t   \"tf_entity_sol_id\": data.DTDRecord.tf_entity_sol_id,\t   \"tran_particular_2\": data.DTDRecord.tran_particular_2,\t   \"tran_particular_code\": data.DTDRecord.tran_particular_code,\t   \"tr_status\": data.DTDRecord.tr_status,\t   \"svs_tran_id\": data.DTDRecord.svs_tran_id,\t   \"crncy_hol_chk_done_flg\": data.DTDRecord.crncy_hol_chk_done_flg,\t   \"referral_id\": data.DTDRecord.referral_id,\t   \"party_code\": data.DTDRecord.party_code,\t   \"gl_date\": data.DTDRecord.gl_date,\t   \"bkdt_tran_flg\": data.DTDRecord.bkdt_tran_flg,\t   \"bank_id\": data.DTDRecord.bank_id,\t   \"impl_cash_part_tran_flg\": data.DTDRecord.impl_cash_part_tran_flg,\t   \"ptran_chrg_exists_flg\": data.DTDRecord.ptran_chrg_exists_flg,\t   \"mud_pool_bal_build_flg\": data.DTDRecord.mud_pool_bal_build_flg,\t   \"used_clean_single_tran_lim\": data.DTDRecord.used_clean_single_tran_lim,\t   \"used_single_tran_lim\": data.DTDRecord.used_clean_single_tran_lim,\t   \"used_un_clr_over_dacc_amt\": data.DTDRecord.used_un_clr_over_dacc_amt,\t   \"used_clean_emer_advn\": data.DTDRecord.used_clean_emer_advn,\t   \"used_emer_advn\": data.DTDRecord.used_emer_advn,\t   \"gl_segment_string\": data.DTDRecord.gl_segment_string,\t   \"comb_tran_id\": data.DTDRecord.comb_tran_id,\t   \"sys_part_tran_code\": data.DTDRecord.sys_part_tran_code,\t   \"user_part_tran_code\": data.DTDRecord.user_part_tran_code,\t   \"tran_free_code1\": data.DTDRecord.tran_free_code1,\t   \"tran_free_code2\": data.DTDRecord.tran_free_code2,\t   \"resp_acct_ref_no\": data.DTDRecord.resp_acct_ref_no,\t   \"purpose_code\": data.DTDRecord.purpose_code,\t   \"ent_account_id\": data.DTDRecord.ent_account_id,\t   \"va_repl_status\": data.DTDRecord.va_repl_status,\t   \"va_real_txn_reqd_flg\": data.DTDRecord.va_real_txn_reqd_flg,\t   \"ent_account_type\": data.DTDRecord.ent_account_type,\t   \"va_account_id\": data.DTDRecord.va_account_id,\t   \"pstd_srl_num\": data.DTDRecord.pstd_srl_num,\t   \"reversal_status\": data.DTDRecord.reversal_status,\t   \"used_sanct_lim\": data.DTDRecord.used_sanct_lim,\t   \"used_pool_amt\": data.DTDRecord.used_pool_amt,\t   \"available_amt\": data.DTDRecord.available_amt,\t   \"acct_balance\": data.DTDRecord.acct_balance,\t   \"purge_flg\": data.DTDRecord.purge_flg,\t   \"foracid\":data.foracid,\t   \"acct_name\":data.accountName,\t   \"schm_code\":data.schemeCode,\t   \"schm_type\":data.schemeType,\t   \"async_balance_flg\":data.asyncBalanceFlag,\t   \"cif_id\":data.cifId \t}\t",
+        "x": 730,
+        "y": 200,
+        "wires": [
+            [
+                "05892bfad873333a"
+            ]
+        ]
+    },
+    {
+        "id": "89399a84477e9206",
+        "type": "aqua_batch_sql_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "coreBusinessBronzeRedo",
+        "name": "partTransactions",
+        "query": "select * from partTransactionBronze",
+        "onerror": "d549eae9.ad9a88",
+        "validatorClass": "",
+        "validatorParams": "{}",
+        "arguments": "{}",
+        "logger": "false",
+        "meta": "{}",
+        "pagesize": 0,
+        "numofviews": "1",
+        "view1": "aa212aec897fcffc",
+        "view2": "",
+        "view3": "",
+        "view4": "",
+        "view5": "",
+        "view6": "",
+        "view7": "",
+        "view8": "",
+        "view9": "",
+        "view10": "",
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "084c293f89d244fc"
+            ]
+        ]
+    },
+    {
+        "id": "c57cd2ccf578df68",
+        "type": "aqua_stream_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "purge",
+        "name": "aquaTranPurgeAck",
+        "stream": "cd93fff3ba8e8192",
+        "arguments": "{}",
+        "meta": "{}",
+        "date": "${#get(body,'businessDate')}",
+        "backup": "false",
+        "conditions": [
+            [
+                {
+                    "expression": "${((topic == 'aqua-purge')&&(#get(body,'type')=='aqua.purge.tranAcctPurge'))}"
+                }
+            ]
+        ],
+        "x": 170,
+        "y": 860,
+        "wires": [
+            [
+                "d2a847c2d92a6299"
+            ]
+        ]
+    },
+    {
+        "id": "d2a847c2d92a6299",
+        "type": "aqua_procedure",
+        "z": "7a9698d2ef68f404",
+        "namespace": "aqua",
+        "name": "tranAcctPurgeAck",
+        "logger": "false",
+        "inputschematype": "input",
+        "inputschema": "{}",
+        "onsuccess": "",
+        "addnlonsuccess1": "",
+        "addnlonsuccess2": "",
+        "hdfs": "",
+        "x": 450,
+        "y": 860,
+        "wires": [
+            [
+                "252763c75be923a2"
+            ]
+        ]
+    },
+    {
+        "id": "252763c75be923a2",
+        "type": "aqua_sql",
+        "z": "7a9698d2ef68f404",
+        "name": "fetchCurrentValue",
+        "query": "select bank_id,value from job_info",
+        "scope": "dataset",
+        "meta": "{}",
+        "maxRecs": "",
+        "streamasview": "",
+        "numofviews": "1",
+        "view1": "77e8f2acc88351ac",
+        "view2": "",
+        "view3": "",
+        "view4": "",
+        "view5": "",
+        "view6": "",
+        "view7": "",
+        "view8": "",
+        "view9": "",
+        "view10": "",
+        "x": 690,
+        "y": 860,
+        "wires": [
+            [
+                "f645413b4d180a19"
+            ]
+        ]
+    },
+    {
+        "id": "f645413b4d180a19",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "applyPrepDate",
+        "expression": "{\t   'bank_id' : bank_id,\t   'job_id':'TRANPURGE',\t   'property': 'ACCT_PREP_DATE',\t   'value': value \t}",
+        "x": 940,
+        "y": 860,
+        "wires": [
+            [
+                "0ff69f6bef3b1109"
+            ]
+        ]
+    },
+    {
+        "id": "0ff69f6bef3b1109",
+        "type": "aqua_action_write_gold",
+        "z": "7a9698d2ef68f404",
+        "name": "updateJobInfo",
+        "storage": "36e583ab.f89c2c",
+        "category": "Action",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1180,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "fd129c57b8cc055b",
+        "type": "aqua_transform_jsonata",
+        "z": "7a9698d2ef68f404",
+        "name": "prepareData",
+        "expression": "{\t'bank_id' : data.bankId,\t'job_id':'TRANPURGE',\t'property': 'PURGE_DATE',\t'value': data.toDate\t}",
+        "x": 950,
+        "y": 960,
+        "wires": [
+            [
+                "a32b6170d070ee55"
+            ]
+        ]
+    },
+    {
+        "id": "a32b6170d070ee55",
+        "type": "aqua_action_write_gold",
+        "z": "7a9698d2ef68f404",
+        "name": "updateJobInfo",
+        "storage": "36e583ab.f89c2c",
+        "category": "Action",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1200,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "f6526cc7fe943c3b",
+        "type": "aqua_sql",
+        "z": "7a9698d2ef68f404",
+        "name": "prepareAccountPurge",
+        "query": "select ap.bank_id as bank_id ,\nap.account as account, \nap.to_date as ito_date \nfrom  account_purge ap join job_info ji on ( ap.bank_id= ji.bank_id and ap.to_date=ji.value)",
+        "scope": "eachrec",
+        "meta": "{}",
+        "maxRecs": "",
+        "streamasview": "",
+        "numofviews": "2",
+        "view1": "85a0beba74212f3b",
+        "view2": "29d6c46fb9a302ce",
+        "view3": "",
+        "view4": "",
+        "view5": "",
+        "view6": "",
+        "view7": "",
+        "view8": "",
+        "view9": "",
+        "view10": "",
+        "x": 740,
+        "y": 1020,
+        "wires": [
+            [
+                "231248865ba3abf6"
+            ]
+        ]
+    },
+    {
+        "id": "231248865ba3abf6",
+        "type": "aqua_generic_transformer",
+        "z": "7a9698d2ef68f404",
+        "name": "tranPurgeCompute",
+        "transformer": "621f0981174e39c6",
+        "conditions": [
+            [
+                {
+                    "expression": ""
+                }
+            ]
+        ],
+        "params": "{}",
+        "x": 970,
+        "y": 1020,
+        "wires": [
+            [
+                "5c2264a45ccb625a"
+            ]
+        ]
+    },
+    {
+        "id": "5c2264a45ccb625a",
+        "type": "aqua_action_write_silver",
+        "z": "7a9698d2ef68f404",
+        "name": "updateAcctTranPurge",
+        "storage": "8782e6c59de1c970",
+        "action": "upsert",
+        "onsuccess": "",
+        "x": 1200,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "721dd933abc236a1",
+        "type": "aqua_stream_event",
+        "z": "7a9698d2ef68f404",
+        "namespace": "purge",
+        "name": "aquaPurgeAck",
+        "stream": "cd93fff3ba8e8192",
+        "arguments": "{}",
+        "meta": "{}",
+        "date": "${#get(body,'businessDate')}",
+        "backup": "false",
+        "conditions": [
+            [
+                {
+                    "expression": "${((topic == 'aqua-purge')&&(#get(body,'type')=='aqua.purge.tranPurge'))}"
+                }
+            ]
+        ],
+        "x": 160,
+        "y": 960,
+        "wires": [
+            [
+                "b17dd87cab052507"
+            ]
+        ]
+    },
+    {
+        "id": "b17dd87cab052507",
+        "type": "aqua_procedure",
+        "z": "7a9698d2ef68f404",
+        "namespace": "aqua",
+        "name": "tranPurgeAck",
+        "logger": "false",
+        "inputschematype": "input",
+        "inputschema": "{}",
+        "onsuccess": "",
+        "addnlonsuccess1": "",
+        "addnlonsuccess2": "",
+        "hdfs": "",
+        "x": 430,
+        "y": 960,
+        "wires": [
+            [
+                "f6526cc7fe943c3b",
+                "fd129c57b8cc055b"
+            ]
+        ]
+    }
+]
