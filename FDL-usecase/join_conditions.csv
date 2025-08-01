@@ -1,0 +1,53 @@
+entity_name, table1, table2, conditions, join_type
+account_classification, gam, gac, gam.acid=gac.acid AND gam.bank_id=gac.bank_id, inner
+asset_classification_detail, lam, acd, lam.acid=acd.acid AND lam.bank_id=acd.bank_id, inner
+asset_classification_detail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+asset_classification_history, acd, ach, acd.b2k_type=ach.b2k_type AND acd.acid=ach.acid AND acd.bank_id=ach.bank_id, inner
+asset_classification_history, lam, acd, lam.acid=acd.acid AND lam.bank_id=acd.bank_id, inner
+asset_classification_history, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+asset_classification_rankdetail, acd, art, acd.b2k_type=art.b2k_type AND acd.acid=art.acid AND acd.bank_id=art.bank_id, inner
+asset_classification_rankdetail, lam, acd, lam.acid=acd.acid AND lam.bank_id=acd.bank_id, inner
+asset_classification_rankdetail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+consolidated_fee_detail, gam, fe_chat, gam.acid=fe_chat.acid AND gam.bank_id=fe_chat.bank_id, inner
+fee_history_detail, gam, fe_ahst, gam.acid=fe_ahst.acid AND gam.bank_id=fe_ahst.bank_id, inner
+fee_transaction_detail, gam, cxl, gam.acid=cxl.acid AND gam.bank_id=cxl.bank_id, inner
+fee_waiver_detail, gam, fe_wht, gam.acid=fe_wht.acid AND gam.bank_id=fe_wht.bank_id, inner
+interest_calculation_related_detail, gam, idt, gam.acid=idt.acid AND gam.bank_id=idt.bank_id, inner
+interest_master_detail, gam, eit, gam.acid=eit.acid AND gam.bank_id=eit.bank_id, inner
+interest_table_code_detail, gam, itc, gam.acid=itc.acid AND gam.bank_id=itc.bank_id, inner
+loan_chargeoff_detail, lam, cot, lam.acid=cot.acid AND lam.bank_id=cot.bank_id, inner
+loan_chargeoff_detail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_deferment_detail, , ladt, .acid=ladt.acid AND .bank_id=ladt.bank_id, inner
+loan_deferment_detail, lam, , lam.acid=.acid AND lam.bank_id=.bank_id, inner
+loan_deferment_detail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_deferment_summary, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_demand_adjustment, ldt, ldah, ldt.shdl_num=ldah.shdl_num AND ldt.dmd_date=ldah.dmd_date AND ldt.dmd_srl_num=ldah.dmd_srl_num AND ldt.acid=ldah.acid AND ldt.bank_id=ldah.bank_id AND ldt.dmd_flow_id=ldah.dmd_flow_id, inner
+loan_demand_adjustment, , ldt, .acid=ldt.acid AND .bank_id=ldt.bank_id, inner
+loan_demand_adjustment, lam, , lam.acid=.acid AND lam.bank_id=.bank_id, inner
+loan_demand_adjustment, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_demand_detail, , ldt, .acid=ldt.acid AND .bank_id=ldt.bank_id, inner
+loan_demand_detail, lam, , lam.acid=.acid AND lam.bank_id=.bank_id, inner
+loan_demand_detail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_demand_detail_history, ldt, ldth, ldt.shdl_num=ldth.shdl_num AND ldt.dmd_date=ldth.dmd_date AND ldt.dmd_srl_num=ldth.dmd_srl_num AND ldt.acid=ldth.acid AND ldt.bank_id=ldth.bank_id AND ldt.dmd_flow_id=ldth.dmd_flow_id, inner
+loan_demand_detail_history, , ldt, .acid=ldt.acid AND .bank_id=ldt.bank_id, inner
+loan_demand_detail_history, lam, , lam.acid=.acid AND lam.bank_id=.bank_id, inner
+loan_demand_detail_history, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_demand_summary, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_disbursement_summary, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_interest_detail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_interest_set_up, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_interest_set_up, gam, eit, gam.acid=eit.acid AND gam.bank_id=eit.bank_id, inner
+loan_interest_set_up, lam, lrp, lam.acid=lrp.acid AND lam.bank_id=lrp.bank_id, inner
+loan_master, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_payment, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_penal_and_installment_detail, lam, la_pdt, lam.acid=la_pdt.acid AND lam.bank_id=la_pdt.bank_id, inner
+loan_penal_and_installment_detail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_reschedule_parameter, , lrh, .acid=lrh.acid AND .bank_id=lrh.bank_id, inner
+loan_reschedule_parameter, lam, , lam.acid=.acid AND lam.bank_id=.bank_id, inner
+loan_reschedule_parameter, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_rescheduling, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_schedule, lam, lrsh, lam.acid=lrsh.acid AND lam.bank_id=lrsh.bank_id, inner
+loan_schedule, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+loan_transaction_detail, lam, ltdh, lam.acid=ltdh.acid AND lam.bank_id=ltdh.bank_id, inner
+loan_transaction_detail, gam, lam, gam.acid=lam.acid AND gam.bank_id=lam.bank_id, inner
+related_party_detail, gam, aas, gam.acid=aas.acid AND gam.bank_id=aas.bank_id, inner
